@@ -1,0 +1,25 @@
+{
+  "name": "timatabling_node",
+  "version": "1.0.0",
+  "description": "University Timetabling API",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/makaubenson/University-Timetabling-Node-API.git"
+  },
+  "keywords": [
+    "Timetabling",
+    "API",
+    "NodeJs",
+    "Express.js"
+  ],
+  "author": "Benson Makau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/makaubenson/University-Timetabling-Node-API/issues"
+  },
+  "homepage": "https://github.com/makaubenson/University-Timetabling-Node-API#readme"
+}
