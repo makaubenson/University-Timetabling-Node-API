@@ -1,5 +1,5 @@
 {
-  "name": "timatabling_node",
+  "name": "timetabling_api_node",
   "version": "1.0.0",
   "description": "University Timetabling API",
   "main": "app.js",
