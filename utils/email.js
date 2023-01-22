@@ -10,35 +10,63 @@ module.exports = class Email {
   }
 
   newTransport() {
-    if (process.env.NODE_ENV === "production") {
-      // Sendgrid
+    if (process.env.NODE_ENV === "development") {
+      // MailTrap
       return nodemailer.createTransport({
-        service: "SendGrid",
+        host: "smtp.mailtrap.io",
+        port: 2525,
+        secure: true,
         auth: {
-          user: process.env.SENDGRID_USERNAME,
-          pass: process.env.SENDGRID_PASSWORD,
+          user: "c866d71719ee4b",
+          pass: "5d6ff07b787abe",
         },
       });
     }
 
+    //shared hosting
     return nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
       port: process.env.EMAIL_PORT,
+      secure: true, //TLS
       auth: {
         user: process.env.EMAIL_USERNAME,
         pass: process.env.EMAIL_PASSWORD,
+      },
+      tls: {
+        // do not fail on invalid certs
+        rejectUnauthorized: false,
       },
     });
   }
 
   // Send the actual email
-  async send(template, subject) {
+  async send(subject) {
     // 1) Render HTML based on a pug template
-    const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
-      firstName: this.firstName,
-      url: this.url,
-      subject,
-    });
+    const html = `  <body>
+    <h1>Dear, ${firstname},</h1>
+    <p>
+      We have received a request to reset your password. If you did not initiate
+      this request, please <strong>ignore</strong> this email.
+    </p>
+    <p>
+      To reset your password, please click the link below:<br />
+      ${this.url}
+    </p>
+    <p>
+      If you are unable to click the link, you can also copy and paste the
+      following URL into your browser:<br />
+      ${this.url}
+    </p>
+    <p>
+      This password reset link will expire in 10 minutes. If you continue to
+      have trouble accessing your account, please contact our customer support
+      team for assistance.
+    </p>
+    <p>
+      Thank you,<br />
+      Blinx Corporation
+    </p>
+  </body>`;
 
     // 2) Define email options
     const mailOptions = {
@@ -54,7 +82,7 @@ module.exports = class Email {
   }
 
   async sendWelcome() {
-    await this.send("Welcome onboard");
+    await this.send("Welcome");
   }
 
   async sendPasswordReset() {
