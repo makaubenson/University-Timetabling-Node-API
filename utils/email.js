@@ -42,31 +42,7 @@ module.exports = class Email {
   // Send the actual email
   async send(subject) {
     // 1) Render HTML based on a pug template
-    const html = `  <body>
-    <h1>Dear, ${firstname},</h1>
-    <p>
-      We have received a request to reset your password. If you did not initiate
-      this request, please <strong>ignore</strong> this email.
-    </p>
-    <p>
-      To reset your password, please click the link below:<br />
-      ${this.url}
-    </p>
-    <p>
-      If you are unable to click the link, you can also copy and paste the
-      following URL into your browser:<br />
-      ${this.url}
-    </p>
-    <p>
-      This password reset link will expire in 10 minutes. If you continue to
-      have trouble accessing your account, please contact our customer support
-      team for assistance.
-    </p>
-    <p>
-      Thank you,<br />
-      Blinx Corporation
-    </p>
-  </body>`;
+    const html = ` `;
 
     // 2) Define email options
     const mailOptions = {
