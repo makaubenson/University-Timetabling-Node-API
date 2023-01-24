@@ -2,8 +2,11 @@
 
 ## Resources
 
-- Students
+- School
+- Departments
 - Courses
 - Units
 - Lecturers
+- Students
 - Lecture Rooms
+- Time Slots
