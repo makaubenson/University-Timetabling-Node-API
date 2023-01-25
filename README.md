@@ -6,6 +6,7 @@
 - Departments
 - Courses
 - Units
+- semester
 - Lecturers
 - Students
 - Lecture Rooms
