@@ -27,18 +27,17 @@ const userSchema = new mongoose.Schema({
     validate: [validator.isEmail, "Please provide a valid email"],
   },
   phoneNumber: {
-    type: String,
+    type: Number,
+    required: true,
+    unique: true,
     validate: {
-      validator: function (v) {
-        return /\d{3}-\d{3}-\d{4}/.test(v);
-      },
-      message: "{VALUE} is not a valid phone number!",
+      validator: Number.isInteger,
+      message: "{VALUE} is not an integer value",
     },
-    required: [true, "User phone number required"],
   },
   role: {
     type: String,
-    enum: ["student", "lecturer", "labTechnician", "Admin", "superAdmin"],
+    enum: ["student", "lecturer", "labTechnician", "chair", "dean", "admin"],
     default: "student",
   },
   password: {

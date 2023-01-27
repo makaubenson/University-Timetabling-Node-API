@@ -1,13 +1,9 @@
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
-
-//Import User Model
-const User = require("./../models/userModel");
-
-//Utils
-const catchAsync = require("./../utils/catchAsync");
-const AppError = require("./../utils/appError");
-const Email = require("./../utils/email");
+const User = require("../models/userModel");
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
+const Email = require("../utils/email");
 
 //create token
 const signToken = (id) => {
@@ -39,3 +35,29 @@ const createSendToken = (user, statusCode, req, res) => {
     },
   });
 };
+
+//SignUp
+exports.signup = catchAsync(async (req, res, next) => {
+  // console.log(req.body);
+  const newUser = await User.create({
+    username: req.body.username,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    phoneNumber: req.body.phoneNumber,
+    email: req.body.email,
+    role: req.body.role,
+    password: req.body.password,
+    passwordConfirm: req.body.passwordConfirm,
+  });
+
+  // console.log(req.body.username);
+  const url = `${req.protocol}://${req.get("host")}/me`;
+  console.log(url);
+
+  //send Verification code on signup
+  // await new Email(newUser, url).sendWelcome();
+
+  createSendToken(newUser, 201, req, res);
+
+  next();
+});
