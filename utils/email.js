@@ -1,7 +1,35 @@
 const nodemailer = require("nodemailer");
 const { convert } = require("html-to-text");
 
-let passwordResetHtml = "";
+let passwordResetHtml = `<body>
+<h1>Dear <span id="fname">{{name}}</span>,</h1>
+<p>
+  We have received a request to reset your password. If you did not initiate
+  this request, please <strong>IGNORE</strong> this email.
+</p>
+<p>
+  To reset your password, please click the link below:<br />
+  <span id="url">{{URL}}</span>
+</p>
+<p>
+  If you are unable to click the link, you can also copy and paste the
+  following URL into your browser:<br />
+  <span id="url2">{{URL}}</span>
+</p>
+<p>
+  This password reset link will expire in 10 minutes. If you continue to
+  have trouble accessing your account, please contact our customer support
+  team for assistance.
+</p>
+<p>
+  Thank you,<br />
+  Blinx Corporation
+</p>
+</body>`;
+
+const text = convert(passwordResetHtml, {
+  wordwrap: 130,
+});
 
 module.exports = class Email {
   constructor(user, url) {
@@ -40,42 +68,16 @@ module.exports = class Email {
       },
     });
   }
-  passwordResetHtml = `<body>
-  <h1>Dear <span id="fname">${this.firstName}</span>,</h1>
-  <p>
-    We have received a request to reset your password. If you did not initiate
-    this request, please <strong>IGNORE</strong> this email.
-  </p>
-  <p>
-    To reset your password, please click the link below:<br />
-    <span id="url">${this.url}</span>
-  </p>
-  <p>
-    If you are unable to click the link, you can also copy and paste the
-    following URL into your browser:<br />
-    <span id="url2">${this.url}</span>
-  </p>
-  <p>
-    This password reset link will expire in 10 minutes. If you continue to
-    have trouble accessing your account, please contact our customer support
-    team for assistance.
-  </p>
-  <p>
-    Thank you,<br />
-    Blinx Corporation
-  </p>
-  </body>`;
+
   // Send the actual email
-  async send(subject, html) {
+  async send(template, subject) {
     // 2) Define email options
     const mailOptions = {
       from: this.from,
       to: this.to,
       subject,
-      html,
-      text: convert(html, {
-        wordwrap: 130,
-      }),
+      template,
+      text: template,
     };
 
     // 3) Create a transport and send email
@@ -87,6 +89,8 @@ module.exports = class Email {
   }
 
   async sendPasswordReset() {
-    await this.send("passwordReset", passwordResetHtml);
+    let newText = text.replace("{{NAME}}", this.firstName);
+    newText = text.replaceAll("{{URL}}", this.url);
+    await this.send(newText, "Password Reset Notification!");
   }
 };
