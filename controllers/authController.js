@@ -36,7 +36,7 @@ const createSendToken = (user, statusCode, req, res) => {
   });
 };
 
-//SignUp
+//SignUp user
 exports.signup = catchAsync(async (req, res, next) => {
   // console.log(req.body);
   const newUser = await User.create({
@@ -62,6 +62,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   next();
 });
 
+//login user
 exports.login = catchAsync(async (req, res, next) => {
   const { username, password } = req.body;
 
@@ -81,3 +82,12 @@ exports.login = catchAsync(async (req, res, next) => {
   // 3) If everything ok, send token to client
   createSendToken(user, 200, req, res);
 });
+
+//Logout
+exports.logout = (req, res) => {
+  res.cookie("jwt", "loggedout", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({ status: "success" });
+};
