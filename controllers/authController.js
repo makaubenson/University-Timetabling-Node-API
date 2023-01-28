@@ -4,6 +4,7 @@ const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const Email = require("../utils/email");
+const { promisify } = require("util");
 
 //create token
 const signToken = (id) => {
@@ -209,8 +210,8 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 //Update Password
 exports.updatePassword = catchAsync(async (req, res, next) => {
   // 1) Get user from collection
-  const user = await User.findById(req.user.username).select("+password");
-
+  const user = await User.findById(req.user.id).select("+password");
+  console.log(user);
   // 2) Check if POSTed current password is correct
   if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
     return next(new AppError("Your current password is wrong.", 401));
