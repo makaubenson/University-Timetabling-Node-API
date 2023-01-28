@@ -121,8 +121,10 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
 };
 
 userSchema.methods.createPasswordResetToken = function () {
+  //create random token (The token which isnt hashed should be sent to the user via email)
   const resetToken = crypto.randomBytes(32).toString("hex");
 
+  //hash the token and store it in DB
   this.passwordResetToken = crypto
     .createHash("sha256")
     .update(resetToken)
