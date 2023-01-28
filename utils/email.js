@@ -1,8 +1,8 @@
 const nodemailer = require("nodemailer");
 const { convert } = require("html-to-text");
-
+let newText;
 let passwordResetHtml = `<body>
-<h1>Dear <span id="fname">{{name}}</span>,</h1>
+<h1>Dear <span id="fname">userName</span>,</h1>
 <p>
   We have received a request to reset your password. If you did not initiate
   this request, please <strong>IGNORE</strong> this email.
@@ -89,8 +89,10 @@ module.exports = class Email {
   }
 
   async sendPasswordReset() {
-    let newText = text.replace("{{NAME}}", this.firstName);
-    newText = text.replaceAll("{{URL}}", this.url);
+    newText = text
+      .replace("USERNAME", this.firstName)
+      .replaceAll("{{URL}}", this.url);
+    // newText = text.replaceAll("{{URL}}", this.url);
     await this.send(newText, "Password Reset Notification!");
   }
 };
