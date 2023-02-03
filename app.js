@@ -39,6 +39,10 @@ app.use(mongoSanitize());
 app.use(xss());
 
 // 3) ROUTES
-// app.use("/api/v1/users", userRouter);
+app.use("/api/v1/users", userRouter);
+
+app.all("*", (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
 
 module.exports = app;
