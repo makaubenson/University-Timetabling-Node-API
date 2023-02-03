@@ -1,7 +1,7 @@
+const { promisify } = require("util");
+const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
-const nodemailer = require("nodemailer");
-const jwt = require("jsonwebtoken");
 const AppError = require("../utils/appError");
 const Email = require("../utils/email");
 
@@ -93,4 +93,88 @@ exports.logout = (req, res) => {
     httpOnly: true,
   });
   res.status(200).json({ status: "success" });
+};
+
+//protect routes
+exports.protect = catchAsync(async (req, res, next) => {
+  // 1) Getting token and check of it's there
+  let token;
+
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    //Bearer vhdnvbscrwgdscvsdgcveghsdchd
+    token = req.headers.authorization.split(" ")[1]; // this code will get the `vhdnvbscrwgdscvsdgcveghsdchd` part
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
+  }
+
+  //if token is NOT FOUND
+  if (!token) {
+    return next(
+      new AppError(
+        "You are not logged in! Please log in to get access this resource.",
+        401
+      )
+    );
+  }
+
+  // 2) Verification token
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  console.log(decoded, "DECODED TOKEN");
+  // 3) Check if user still exists
+  const currentUser = await User.findById(decoded.id);
+  if (!currentUser) {
+    return next(
+      new AppError(
+        "The user belonging to this token does no longer exist.",
+        401
+      )
+    );
+  }
+
+  // 4) Check if user changed password after the token was issued
+  if (currentUser.changedPasswordAfter(decoded.iat)) {
+    return next(
+      new AppError("User recently changed password! Please log in again.", 401)
+    );
+  }
+});
+
+//Check if user is logged in or not
+exports.isLoggedIn = async (req, res, next) => {
+  if (req.cookies.jwt) {
+    try {
+      // 1) verify token
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET
+      );
+
+      // 2) Check if user still exists
+      const currentUser = await User.findById(decoded.id);
+      if (!currentUser) {
+        return next();
+      }
+
+      // 3) Check if user changed password after the token was issued
+      if (currentUser.changedPasswordAfter(decoded.iat)) {
+        return next();
+      }
+
+      //res.locals is an object in Express.js that can be used to store data
+      // that is local to a single request/response cycle and can be accessed in the view templates.
+      //In this code, res.locals.user is being used to store the current user object if the user is
+      //logged in, so it can be accessed and used in the view templates. By setting the user property
+      //on res.locals, the user object will be available in the views as a local variable, without the
+      //need to pass it explicitly in each render call.
+      res.locals.user = currentUser;
+
+      return next();
+    } catch (err) {
+      return next();
+    }
+  }
+  next();
 };
