@@ -6,6 +6,10 @@ const bcrypt = require("bcryptjs");
 // Create a schema
 // a schema is a blueprint or structure that defines the shape of a document, including the fields and their data types.
 const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: [true, "Please tell us your username!"],
+  },
   firstname: {
     type: String,
     required: [true, "Please tell us your first name!"],
