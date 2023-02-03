@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const userRouter = require("./routes/userRouter");
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
+const AppError = require("./utils/appError");
 
 const app = express();
 

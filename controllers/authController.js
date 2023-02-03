@@ -1,8 +1,8 @@
 const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
-const AppError = require("../utils/appError");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
+const AppError = require("../utils/appError");
 const Email = require("../utils/email");
 
 //method to sign a jsonwebtoken
@@ -60,4 +60,28 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   // 3) If everything ok, send token to client
   createSendToken(newUser, 200, req, res);
+});
+
+//Login user
+exports.login = catchAsync(async (req, res, next) => {
+  //get email and password from req.body
+  const { email, username, password } = req.body;
+
+  // 1) Check if username and password exist
+  if (!username || !password) {
+    // console.log(username);
+    return next(
+      new AppError("Please provide both username and password!", 400)
+    );
+  }
+
+  //2) Check id user exists and password is correct
+  const user = await User.findOne({ username }).select("+password");
+
+  if (!user || !(await user.correctPassword(password, user.password))) {
+    return next(new AppError("Incorrect Email or Password", 401));
+  }
+
+  // 3) If everything is OK, send token to client
+  createSendToken(user, 200, req, res);
 });
