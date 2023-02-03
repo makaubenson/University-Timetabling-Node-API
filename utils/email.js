@@ -1,6 +1,8 @@
 const nodemailer = require("nodemailer");
 const { convert } = require("html-to-text");
-let newText;
+let resetPassText;
+let signupUserText;
+
 let passwordResetHtml = `<body>
 <h1>Dear <span id="fname">userName</span>,</h1>
 <p>
@@ -27,8 +29,25 @@ let passwordResetHtml = `<body>
 </p>
 </body>`;
 
-const text = convert(passwordResetHtml, {
+let signupWelcomeHtml = `
+<body>
+<p>Dear userFname,</p>
+<p>We are thrilled to have you as a new member of Maseno University. Thank you for signing up with us!</p>
+<p>At Maseno University, our goal is to provide you with the best timetabling experience.<br/> With your account, you can now access all of the features and benefits that you are authorised to access.</p>
+<p>You can log in now <a href="URL">here</a>
+<p>We look forward to serving you and hope that you enjoy using our system.</p>
+
+<p>Best regards,</p>
+<p>Blinx Corporation.</p>
+</body>
+
+`;
+const ResetPasstext = convert(passwordResetHtml, {
   wordwrap: 130,
+});
+
+const welcomeMsgText = convert(signupWelcomeHtml, {
+  wordwrap: 150,
 });
 
 module.exports = class Email {
@@ -84,15 +103,19 @@ module.exports = class Email {
     await this.newTransport().sendMail(mailOptions);
   }
 
-  async sendWelcome() {
-    await this.send("Welcome", "Welcome to this great application!");
+  async sendWelcomeMessage() {
+    signupUserText = welcomeMsgText
+      .replace("userFname", this.firstName)
+      .replace("URL", this.url);
+    await this.send(signupUserText, "Welcome, Successfully Signed Up!");
   }
 
   async sendPasswordReset() {
-    newText = text
-      .replace("USERNAME", this.firstName)
-      .replaceAll("{{URL}}", this.url);
-    // newText = text.replaceAll("{{URL}}", this.url);
-    await this.send(newText, "Password Reset Notification!");
+    resetPassText = ResetPasstext.replace(
+      "USERNAME",
+      this.firstName
+    ).replaceAll("{{URL}}", this.url);
+    // resetPassText = text.replaceAll("{{URL}}", this.url);
+    await this.send(resetPassText, "Password Reset Notification!");
   }
 };
