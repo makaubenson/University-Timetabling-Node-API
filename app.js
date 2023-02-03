@@ -39,6 +39,6 @@ app.use(mongoSanitize());
 app.use(xss());
 
 // 3) ROUTES
-app.use("/api/v1/users", userRouter);
+// app.use("/api/v1/users", userRouter);
 
 module.exports = app;
