@@ -2,14 +2,13 @@
 
 ## Resources
 
-- School
+- Schools
 - Departments
 - Courses
 - Units
-- semester
-- Lecturers
-- Students
-- Lecture Rooms
+- Semesters
+- Users [`student`,`lecturer`,`labtechnician`,`chairperson`,`dean`, `admin`]
+- Lecture Rooms (`Names,capacities, type[lab,class]`)
 - Time Slots
 
 ### Problem Statement
