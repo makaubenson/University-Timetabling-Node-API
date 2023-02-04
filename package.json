@@ -43,5 +43,8 @@
     "slugify": "^1.6.5",
     "validator": "^13.7.0",
     "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "eslint-plugin-react": "^7.32.2"
   }
 }
