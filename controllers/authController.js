@@ -175,7 +175,7 @@ exports.isLoggedIn = async (req, res, next) => {
       //logged in, so it can be accessed and used in the view templates. By setting the user property
       //on res.locals, the user object will be available in the views as a local variable, without the
       //need to pass it explicitly in each render call.
-      res.locals.user = currentUser;
+      // res.locals.user = currentUser;
 
       return next();
     } catch (err) {
