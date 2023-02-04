@@ -93,7 +93,10 @@ exports.logout = (req, res) => {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
   });
-  res.status(200).json({ status: 'success' });
+  res.status(200).json({
+    status: 'success',
+    message: 'You have successfully logged out.',
+  });
 };
 
 //protect routes
@@ -124,21 +127,18 @@ exports.protect = catchAsync(async (req, res, next) => {
   // 2) Verification token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
   // console.log(decoded, 'DECODED TOKEN');
+
   // 3) Check if user still exists
   const currentUser = await User.findById(decoded.id);
+
   if (!currentUser) {
-    return next(
-      new AppError(
-        'The user belonging to this token does no longer exist.',
-        401
-      )
-    );
+    return next(new AppError('The user no longer exist.', 401));
   }
 
   // 4) Check if user changed password after the token was issued
   if (currentUser.changedPasswordAfter(decoded.iat)) {
     return next(
-      new AppError('User recently changed password! Please log in again.', 401)
+      new AppError('User recently changed password! Please log in again!.', 401)
     );
   }
 
