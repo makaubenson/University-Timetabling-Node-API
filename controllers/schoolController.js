@@ -37,3 +37,9 @@ exports.createSchool = catchAsync(async (req, res, next) => {
   });
   next();
 });
+
+//Update School
+exports.updateSchool = () => {};
+
+//delete school
+exports.deleteSchool = () => {};
