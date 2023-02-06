@@ -5,7 +5,7 @@
 - Schools
 - Departments
 - Courses
-- Units
+- Units (TYPE[`Theory,practical`])
 - Semesters
 - Users [`student`,`lecturer`,`labtechnician`,`chairperson`,`dean`, `admin`]
 - Lecture Rooms (`Names,capacities, type[lab,class]`)
