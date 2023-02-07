@@ -11,6 +11,7 @@ const AppError = require('./utils/appError');
 
 const userRouter = require('./routes/userRouter');
 const schoolRouter = require('./routes/schoolRouter');
+const departmentRouter = require('./routes/departmentRouter');
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use(xss());
 // 3) ROUTES
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/schools', schoolRouter);
+app.use('/api/v1/departments', departmentRouter);
 
 // app.all('*', (req, res, next) => {
 //   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
