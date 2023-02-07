@@ -2,6 +2,7 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const Email = require('../utils/email');
 const Department = require('../models/departmentModel');
+const mongoose = require('mongoose');
 
 //Add a new department
 exports.createDepartment = catchAsync(async (req, res, next) => {
@@ -47,7 +48,7 @@ exports.updateDepartment = catchAsync(async (req, res, next) => {
   const departmentData = {
     departmentId: req.body.departmentId,
     departmentName: req.body.departmentName,
-    school: req.body.school,
+    school: req.body.schoolid,
   };
   // console.log(`Department Data:`, departmentData);
 
@@ -59,7 +60,6 @@ exports.updateDepartment = catchAsync(async (req, res, next) => {
       if (err) return next(new AppError(`${err}`, 500));
       if (!updatedDepartment)
         return next(new AppError('Department not found', 404));
-
       res.status(200).json({
         status: 'success',
         data: {
@@ -68,4 +68,25 @@ exports.updateDepartment = catchAsync(async (req, res, next) => {
       });
     }
   );
+});
+
+//Get all Departments
+exports.getAllDepartments = catchAsync(async (req, res, next) => {
+  //fetch all departments
+  //populate('school') adds details of schools on the result
+  const departments = await Department.find().populate('school');
+  //   console.log(departments);
+
+  // Filter departments with a populated school field
+  // const filteredDepartments = departments.filter(
+  //   department => department.school
+  // );
+
+  res.status(200).json({
+    status: 'success',
+    results: departments.length,
+    data: {
+      departments,
+    },
+  });
 });

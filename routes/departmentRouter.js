@@ -26,6 +26,6 @@ router.patch(
 //   departmentController.deleteDepartment
 // );
 
-// router.get('/allDepartments', departmentController.getAllDepartments);
+router.get('/allDepartments', departmentController.getAllDepartments);
 
 module.exports = router;
