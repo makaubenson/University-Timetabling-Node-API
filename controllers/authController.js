@@ -61,6 +61,8 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   // 3) If everything ok, send token to client
   createSendToken(newUser, 200, req, res);
+
+  next();
 });
 
 //Login user
@@ -85,6 +87,8 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // 3) If everything is OK, send token to client
   createSendToken(user, 200, req, res);
+
+  next();
 });
 
 //Logout user
@@ -145,6 +149,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   // GRANT ACCESS TO PROTECTED ROUTE
   req.user = currentUser;
   // res.locals.user = currentUser;
+
   next();
 });
 
