@@ -71,4 +71,19 @@ exports.updateSchool = catchAsync(async (req, res, next) => {
 });
 
 //delete school
-exports.deleteSchool = () => {};
+exports.deleteSchool = catchAsync(async (req, res, next) => {
+  //get the schoolid specified in the params
+  const schId = req.params.schoolid;
+  // console.log(`School ID 1:`, schId);
+
+  //delete school
+  const deletedSchool = await School.findByIdAndDelete(schId);
+
+  if (!deletedSchool)
+    return next(new AppError('No School with that Id Found!', 404));
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});

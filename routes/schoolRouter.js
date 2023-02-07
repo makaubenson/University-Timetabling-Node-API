@@ -18,6 +18,6 @@ router.post(
 router.patch('/updateSchool/:schoolid', schoolController.updateSchool);
 
 //delete school
-router.delete('/deleteSchool/:id', schoolController.deleteSchool);
+router.delete('/deleteSchool/:schoolid', schoolController.deleteSchool);
 
 module.exports = router;
