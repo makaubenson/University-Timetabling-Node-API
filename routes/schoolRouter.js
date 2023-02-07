@@ -20,4 +20,6 @@ router.patch('/updateSchool/:schoolid', schoolController.updateSchool);
 //delete school
 router.delete('/deleteSchool/:schoolid', schoolController.deleteSchool);
 
+router.get('/allSchools', schoolController.getAllSchools);
+
 module.exports = router;

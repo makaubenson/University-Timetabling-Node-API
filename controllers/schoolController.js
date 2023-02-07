@@ -35,7 +35,7 @@ exports.createSchool = catchAsync(async (req, res, next) => {
       school,
     },
   });
-  next();
+  // next();
 });
 
 //Update School
@@ -65,9 +65,9 @@ exports.updateSchool = catchAsync(async (req, res, next) => {
           updatedSchool,
         },
       });
-      next();
     }
   );
+  // next();
 });
 
 //delete school
@@ -85,5 +85,19 @@ exports.deleteSchool = catchAsync(async (req, res, next) => {
   res.status(204).json({
     status: 'success',
     data: null,
+  });
+
+  // next();
+});
+
+//Get All Schools
+exports.getAllSchools = catchAsync(async (req, res, next) => {
+  const schools = await School.find();
+  res.status(200).json({
+    status: 'success',
+    results: schools.length,
+    data: {
+      schools,
+    },
   });
 });
