@@ -18,6 +18,11 @@ const schoolSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  active: {
+    type: Boolean,
+    default: true,
+    select: false,
+  },
   dateCreated: {
     type: Date,
     required: true,
