@@ -14,11 +14,11 @@ router.post(
   departmentController.createDepartment
 );
 
-//update school
-// router.patch(
-//   '/updateDepartment/:departmentid',
-//   departmentController.createDepartment
-// );
+//update department
+router.patch(
+  '/updateDepartment/:departmentid',
+  departmentController.updateDepartment
+);
 
 //delete school
 // router.delete(

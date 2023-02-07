@@ -36,3 +36,36 @@ exports.createDepartment = catchAsync(async (req, res, next) => {
   });
   next();
 });
+
+//update department
+exports.updateDepartment = catchAsync(async (req, res, next) => {
+  //get the departmentid specified in the params
+  const dptId = req.params.departmentid;
+  // console.log(`Department ID 1:`, dptId);
+
+  //get data on the req.body
+  const departmentData = {
+    departmentId: req.body.departmentId,
+    departmentName: req.body.departmentName,
+    school: req.body.school,
+  };
+  // console.log(`Department Data:`, departmentData);
+
+  Department.findOneAndUpdate(
+    { _id: dptId },
+    { $set: departmentData },
+    { new: true },
+    (err, updatedDepartment) => {
+      if (err) return next(new AppError(`${err}`, 500));
+      if (!updatedDepartment)
+        return next(new AppError('Department not found', 404));
+
+      res.status(200).json({
+        status: 'success',
+        data: {
+          updatedDepartment,
+        },
+      });
+    }
+  );
+});
