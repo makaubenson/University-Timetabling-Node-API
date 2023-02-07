@@ -15,9 +15,9 @@ router.post(
 );
 
 //update school
-router.patch('/updateSchool', schoolController.updateSchool);
+router.patch('/updateSchool/:schoolid', schoolController.updateSchool);
 
 //delete school
-router.delete('/deleteSchool:id', schoolController.deleteSchool);
+router.delete('/deleteSchool/:id', schoolController.deleteSchool);
 
 module.exports = router;

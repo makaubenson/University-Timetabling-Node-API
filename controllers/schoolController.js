@@ -31,7 +31,7 @@ exports.createSchool = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: 'success',
-    date: {
+    data: {
       school,
     },
   });
@@ -39,7 +39,36 @@ exports.createSchool = catchAsync(async (req, res, next) => {
 });
 
 //Update School
-exports.updateSchool = () => {};
+exports.updateSchool = catchAsync(async (req, res, next) => {
+  //get the schoolid specified in the params
+  const schId = req.params.schoolid;
+  // console.log(`School ID 1:`, schId);
+
+  //get data on the req.body
+  const schoolData = {
+    schoolId: req.body.schoolId,
+    schoolName: req.body.schoolName,
+    shortName: req.body.shortName,
+  };
+  // console.log(`School Data:`, schoolData);
+
+  School.findOneAndUpdate(
+    { _id: schId },
+    { $set: schoolData },
+    { new: true },
+    (err, updatedSchool) => {
+      if (err) return next(new AppError(`${err}`, 500));
+      if (!updatedSchool) return next(new AppError('School not found', 404));
+      res.status(200).json({
+        status: 'success',
+        data: {
+          updatedSchool,
+        },
+      });
+      next();
+    }
+  );
+});
 
 //delete school
 exports.deleteSchool = () => {};
