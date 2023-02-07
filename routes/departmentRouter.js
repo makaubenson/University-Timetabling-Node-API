@@ -20,11 +20,11 @@ router.patch(
   departmentController.updateDepartment
 );
 
-//delete school
-// router.delete(
-//   '/deleteDepartment/:departmentid',
-//   departmentController.deleteDepartment
-// );
+// delete department
+router.delete(
+  '/deleteDepartment/:departmentid',
+  departmentController.deleteDepartment
+);
 
 router.get('/allDepartments', departmentController.getAllDepartments);
 

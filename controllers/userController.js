@@ -14,7 +14,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
       users,
     },
   });
-  next();
+  // next();
 });
 
 //checkRole middleware used to check if the user has the required role

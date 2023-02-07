@@ -62,7 +62,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   // 3) If everything ok, send token to client
   createSendToken(newUser, 200, req, res);
 
-  next();
+  // next();
 });
 
 //Login user
@@ -88,7 +88,7 @@ exports.login = catchAsync(async (req, res, next) => {
   // 3) If everything is OK, send token to client
   createSendToken(user, 200, req, res);
 
-  next();
+  // next();
 });
 
 //Logout user

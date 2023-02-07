@@ -2,7 +2,6 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const Email = require('../utils/email');
 const Department = require('../models/departmentModel');
-const mongoose = require('mongoose');
 
 //Add a new department
 exports.createDepartment = catchAsync(async (req, res, next) => {
@@ -35,7 +34,7 @@ exports.createDepartment = catchAsync(async (req, res, next) => {
       department,
     },
   });
-  next();
+  //   next();
 });
 
 //update department
@@ -89,4 +88,24 @@ exports.getAllDepartments = catchAsync(async (req, res, next) => {
       departments,
     },
   });
+});
+
+//delete department
+exports.deleteDepartment = catchAsync(async (req, res, next) => {
+  //get the departmentid specified in the params
+  const dptId = req.params.departmentid;
+  // console.log(`Department ID 1:`, dptId);
+
+  //delete department
+  const deletedDepartment = await Department.findByIdAndDelete(dptId);
+
+  if (!deletedDepartment)
+    return next(new AppError('No Department with that Id Found!', 404));
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+
+  // next();
 });
