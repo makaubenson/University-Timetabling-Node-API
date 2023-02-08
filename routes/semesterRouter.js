@@ -18,7 +18,7 @@ router.post(
 router.patch('/updateSemester/:semesterid', semesterController.updateSemester);
 
 // // delete department
-// router.delete('/deleteCourse/:courseid', courseController.deleteCourse);
+router.delete('/deleteSemester/:semesterid', semesterController.deleteSemester);
 
 // router.get('/allCourses', courseController.getAllCourses);
 

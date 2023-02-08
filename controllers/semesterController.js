@@ -67,3 +67,22 @@ exports.updateSemester = catchAsync(async (req, res, next) => {
   );
   // next();
 });
+
+//delete semester
+exports.deleteSemester = catchAsync(async (req, res, next) => {
+  //get the semesterid specified in the params
+  const semId = req.params.semesterid;
+  // console.log(`Semester ID 1:`, semId);
+
+  //delete semester
+  const deletedSemester = await Semester.findByIdAndDelete(semId);
+
+  if (!deletedSemester) return next(new AppError('Semester Not Found!', 404));
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+
+  // next();
+});
