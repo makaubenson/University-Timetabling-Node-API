@@ -1,31 +1,31 @@
 const express = require('express');
 const authController = require('../controllers/authController');
-const departmentController = require('../controllers/departmentController');
+const courseController = require('../controllers/courseController');
 
 const router = express.Router();
 
 // Protect all routes after this middleware
 router.use(authController.protect);
 
-//add a new department
+//add a new course
 router.post(
-  '/addDepartment',
+  '/addCourse',
   authController.isLoggedIn,
-  departmentController.createDepartment
+  courseController.createCourse
 );
 
-//update department
-router.patch(
-  '/updateDepartment/:departmentid',
-  departmentController.updateDepartment
-);
+// //update department
+// router.patch(
+//   '/updateDepartment/:departmentid',
+//   departmentController.updateDepartment
+// );
 
-// delete department
-router.delete(
-  '/deleteDepartment/:departmentid',
-  departmentController.deleteDepartment
-);
+// // delete department
+// router.delete(
+//   '/deleteDepartment/:departmentid',
+//   departmentController.deleteDepartment
+// );
 
-router.get('/allDepartments', departmentController.getAllDepartments);
+// router.get('/allDepartments', departmentController.getAllDepartments);
 
 module.exports = router;
