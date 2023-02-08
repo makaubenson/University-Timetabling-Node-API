@@ -13,4 +13,7 @@ router.post('/addUnit', authController.isLoggedIn, unitController.createUnit);
 // //update unit
 router.patch('/updateUnit/:unitid', unitController.updateUnit);
 
+// //delete unit
+router.delete('/deleteUnit/:unitid', unitController.deleteUnit);
+
 module.exports = router;

@@ -71,3 +71,22 @@ exports.updateUnit = catchAsync(async (req, res, next) => {
   );
   // next();
 });
+
+//delete unit
+exports.deleteUnit = catchAsync(async (req, res, next) => {
+  //get the unitid specified in the params
+  const unitId = req.params.unitid;
+  // console.log(`unit ID 1:`, unitId);
+
+  //delete unit
+  const deletedUnit = await Unit.findByIdAndDelete(unitId);
+
+  if (!deletedUnit) return next(new AppError('Unit Not Found!', 404));
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+
+  // next();
+});
