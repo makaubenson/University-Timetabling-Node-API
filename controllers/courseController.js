@@ -67,3 +67,22 @@ exports.updateCourse = catchAsync(async (req, res, next) => {
     }
   );
 });
+
+//delete course
+exports.deleteCourse = catchAsync(async (req, res, next) => {
+  //get the courseid specified in the params
+  const crsId = req.params.courseid;
+  // console.log(`Course ID 1:`, crsId);
+
+  //delete course
+  const deletedCourse = await Course.findByIdAndDelete(crsId);
+
+  if (!deletedCourse) return next(new AppError('Course Not Found!', 404));
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+
+  // next();
+});

@@ -13,11 +13,7 @@ const courseSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  active: {
-    type: Boolean,
-    default: true,
-    select: false,
-  },
+
   //linking course to school
   department: {
     type: mongoose.Schema.Types.ObjectId,
