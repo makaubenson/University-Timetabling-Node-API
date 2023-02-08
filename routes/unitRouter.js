@@ -10,4 +10,7 @@ router.use(authController.protect);
 //add a new unit
 router.post('/addUnit', authController.isLoggedIn, unitController.createUnit);
 
+// //update unit
+router.patch('/updateUnit/:unitid', unitController.updateUnit);
+
 module.exports = router;
