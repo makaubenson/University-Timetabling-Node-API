@@ -4,7 +4,7 @@ const Joi = require('joi');
 //create schema
 const courseSchema = new mongoose.Schema({
   courseId: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
   },
