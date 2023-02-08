@@ -86,3 +86,15 @@ exports.deleteSemester = catchAsync(async (req, res, next) => {
 
   // next();
 });
+
+//Get All Semesters
+exports.getAllSemesters = catchAsync(async (req, res, next) => {
+  const semesters = await Semester.find();
+  res.status(200).json({
+    status: 'success',
+    results: semesters.length,
+    data: {
+      semesters,
+    },
+  });
+});

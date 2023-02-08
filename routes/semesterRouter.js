@@ -17,9 +17,10 @@ router.post(
 // //update semester
 router.patch('/updateSemester/:semesterid', semesterController.updateSemester);
 
-// // delete department
+// // delete semester
 router.delete('/deleteSemester/:semesterid', semesterController.deleteSemester);
 
-// router.get('/allCourses', courseController.getAllCourses);
+//get all semesters
+router.get('/getAllSemesters', semesterController.getAllSemesters);
 
 module.exports = router;
