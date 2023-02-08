@@ -16,4 +16,7 @@ router.patch('/updateUnit/:unitid', unitController.updateUnit);
 // //delete unit
 router.delete('/deleteUnit/:unitid', unitController.deleteUnit);
 
+//get all units
+router.get('/getAllUnits', unitController.getAllUnits);
+
 module.exports = router;

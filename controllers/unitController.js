@@ -90,3 +90,15 @@ exports.deleteUnit = catchAsync(async (req, res, next) => {
 
   // next();
 });
+
+//Get All Units
+exports.getAllUnits = catchAsync(async (req, res, next) => {
+  const units = await Unit.find().populate('course').populate('semester');
+  res.status(200).json({
+    status: 'success',
+    results: units.length,
+    data: {
+      units,
+    },
+  });
+});
