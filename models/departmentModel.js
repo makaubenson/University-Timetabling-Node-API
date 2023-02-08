@@ -41,6 +41,6 @@ departmentSchema.methods.validateData = function () {
 };
 
 //create model
-const department = mongoose.model('Department', departmentSchema);
+const Department = mongoose.model('Department', departmentSchema);
 
-module.exports = department;
+module.exports = Department;
