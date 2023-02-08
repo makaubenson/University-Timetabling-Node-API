@@ -20,6 +20,6 @@ router.patch('/updateCourse/:courseid', courseController.updateCourse);
 // delete department
 router.delete('/deleteCourse/:courseid', courseController.deleteCourse);
 
-// router.get('/allDepartments', departmentController.getAllDepartments);
+router.get('/allCourses', courseController.getAllCourses);
 
 module.exports = router;

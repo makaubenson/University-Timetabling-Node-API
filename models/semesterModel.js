@@ -2,23 +2,18 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 
 //create schema
-const courseSchema = new mongoose.Schema({
-  courseId: {
+const semesterSchema = new mongoose.Schema({
+  semesterId: {
     type: String,
     required: true,
     unique: true,
   },
-  courseName: {
+  semesterName: {
     type: String,
     required: true,
     unique: true,
   },
 
-  //linking course to department
-  department: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Department',
-  },
   dateCreated: {
     type: Date,
     required: true,
@@ -26,10 +21,10 @@ const courseSchema = new mongoose.Schema({
 });
 
 //validate schema
-courseSchema.methods.validateData = function () {
+semesterSchema.methods.validateData = function () {
   const schema = Joi.object({
-    courseId: Joi.string().required(),
-    courseName: Joi.string().required(),
+    semesterId: Joi.string().required(),
+    semesterName: Joi.string().required(),
     dateCreated: Joi.date().required(),
   });
 
@@ -37,6 +32,6 @@ courseSchema.methods.validateData = function () {
 };
 
 //create model
-const Course = mongoose.model('Course', courseSchema);
+const Semester = mongoose.model('Semester', semesterSchema);
 
-module.exports = Course;
+module.exports = Semester;

@@ -86,3 +86,24 @@ exports.deleteCourse = catchAsync(async (req, res, next) => {
 
   // next();
 });
+
+//Get all Courses
+exports.getAllCourses = catchAsync(async (req, res, next) => {
+  //fetch all courses
+  //populate('department') adds details of department on the result
+  const courses = await Course.find().populate('department');
+  console.log(courses);
+
+  // Filter courses with a populated department field
+  // const filteredCourses = courses.filter(
+  //   course => course.department
+  // );
+
+  res.status(200).json({
+    status: 'success',
+    results: courses.length,
+    data: {
+      courses,
+    },
+  });
+});

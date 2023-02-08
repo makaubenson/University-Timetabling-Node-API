@@ -69,6 +69,26 @@ exports.updateDepartment = catchAsync(async (req, res, next) => {
   );
 });
 
+//delete department
+exports.deleteDepartment = catchAsync(async (req, res, next) => {
+  //get the departmentid specified in the params
+  const dptId = req.params.departmentid;
+  // console.log(`Department ID 1:`, dptId);
+
+  //delete department
+  const deletedDepartment = await Department.findByIdAndDelete(dptId);
+
+  if (!deletedDepartment)
+    return next(new AppError('No Department with that Id Found!', 404));
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+
+  // next();
+});
+
 //Get all Departments
 exports.getAllDepartments = catchAsync(async (req, res, next) => {
   //fetch all departments
@@ -88,24 +108,4 @@ exports.getAllDepartments = catchAsync(async (req, res, next) => {
       departments,
     },
   });
-});
-
-//delete department
-exports.deleteDepartment = catchAsync(async (req, res, next) => {
-  //get the departmentid specified in the params
-  const dptId = req.params.departmentid;
-  // console.log(`Department ID 1:`, dptId);
-
-  //delete department
-  const deletedDepartment = await Department.findByIdAndDelete(dptId);
-
-  if (!deletedDepartment)
-    return next(new AppError('No Department with that Id Found!', 404));
-
-  res.status(204).json({
-    status: 'success',
-    data: null,
-  });
-
-  // next();
 });
