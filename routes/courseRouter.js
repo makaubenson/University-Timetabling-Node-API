@@ -14,11 +14,8 @@ router.post(
   courseController.createCourse
 );
 
-// //update department
-// router.patch(
-//   '/updateDepartment/:departmentid',
-//   departmentController.updateDepartment
-// );
+// //update course
+router.patch('/updateCourse/:courseid', courseController.updateCourse);
 
 // // delete department
 // router.delete(

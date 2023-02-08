@@ -36,3 +36,34 @@ exports.createCourse = catchAsync(async (req, res, next) => {
   });
   //   next();
 });
+
+//update course
+exports.updateCourse = catchAsync(async (req, res, next) => {
+  //get the courseid specified in the params
+  const crsId = req.params.courseid;
+  // console.log(`Course ID 1:`, crsId);
+
+  //get data on the req.body
+  const courseData = {
+    courseId: req.body.courseId,
+    courseName: req.body.courseName,
+    department: req.body.departmentid,
+  };
+  // console.log(`Course Data:`, courseData);
+
+  Course.findOneAndUpdate(
+    { _id: crsId },
+    { $set: courseData },
+    { new: true },
+    (err, updatedCourse) => {
+      if (err) return next(new AppError(`${err}`, 500));
+      if (!updatedCourse) return next(new AppError('Course Not Found!', 404));
+      res.status(200).json({
+        status: 'success',
+        data: {
+          updatedCourse,
+        },
+      });
+    }
+  );
+});
