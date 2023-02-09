@@ -17,4 +17,7 @@ router.patch('/updateRoom/:roomid', roomController.updateRoom);
 // delete room
 router.delete('/deleteRoom/:roomid', roomController.deleteRoom);
 
+// get all rooms
+router.get('/getAllRooms', roomController.getAllRooms);
+
 module.exports = router;

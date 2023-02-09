@@ -87,23 +87,17 @@ exports.deleteRoom = catchAsync(async (req, res, next) => {
   // next();
 });
 
-// //Get all Rooms
-// exports.getAllCourses = catchAsync(async (req, res, next) => {
-//   //fetch all courses
-//   //populate('department') adds details of department on the result
-//   const courses = await Course.find().populate('department');
-//   console.log(courses);
+//Get all Rooms
+exports.getAllRooms = catchAsync(async (req, res, next) => {
+  //fetch all rooms
+  const rooms = await Room.find();
+  // console.log(rooms);
 
-//   // Filter courses with a populated department field
-//   // const filteredCourses = courses.filter(
-//   //   course => course.department
-//   // );
-
-//   res.status(200).json({
-//     status: 'success',
-//     results: courses.length,
-//     data: {
-//       courses,
-//     },
-//   });
-// });
+  res.status(200).json({
+    status: 'success',
+    results: rooms.length,
+    data: {
+      rooms,
+    },
+  });
+});
