@@ -68,26 +68,26 @@ exports.updateRoom = catchAsync(async (req, res, next) => {
   );
 });
 
-// //delete course
-// exports.deleteCourse = catchAsync(async (req, res, next) => {
-//   //get the courseid specified in the params
-//   const crsId = req.params.courseid;
-//   // console.log(`Course ID 1:`, crsId);
+//delete room
+exports.deleteRoom = catchAsync(async (req, res, next) => {
+  //get the roomid specified in the params
+  const roomId = req.params.roomid;
+  // console.log(`Room ID 1:`, roomId);
 
-//   //delete course
-//   const deletedCourse = await Course.findByIdAndDelete(crsId);
+  //delete room
+  const deletedRoom = await Room.findByIdAndDelete(roomId);
 
-//   if (!deletedCourse) return next(new AppError('Course Not Found!', 404));
+  if (!deletedRoom) return next(new AppError('Room Not Found!', 404));
 
-//   res.status(204).json({
-//     status: 'success',
-//     data: null,
-//   });
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
 
-//   // next();
-// });
+  // next();
+});
 
-// //Get all Courses
+// //Get all Rooms
 // exports.getAllCourses = catchAsync(async (req, res, next) => {
 //   //fetch all courses
 //   //populate('department') adds details of department on the result

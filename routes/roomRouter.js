@@ -13,4 +13,8 @@ router.post('/addRoom', roomController.createRoom);
 
 //update room
 router.patch('/updateRoom/:roomid', roomController.updateRoom);
+
+// delete room
+router.delete('/deleteRoom/:roomid', roomController.deleteRoom);
+
 module.exports = router;
