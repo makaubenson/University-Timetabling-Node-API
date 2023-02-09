@@ -37,36 +37,36 @@ exports.createRoom = catchAsync(async (req, res, next) => {
   //   next();
 });
 
-// //update course
-// exports.updateCourse = catchAsync(async (req, res, next) => {
-//   //get the courseid specified in the params
-//   const crsId = req.params.courseid;
-//   // console.log(`Course ID 1:`, crsId);
+//update room
+exports.updateRoom = catchAsync(async (req, res, next) => {
+  //get the roomid specified in the params
+  const roomId = req.params.roomid;
+  // console.log(`Room ID 1:`, roomId);
 
-//   //get data on the req.body
-//   const courseData = {
-//     courseId: req.body.courseId,
-//     courseName: req.body.courseName,
-//     department: req.body.departmentid,
-//   };
-//   // console.log(`Course Data:`, courseData);
+  //get data on the req.body
+  const roomData = {
+    roomId: req.body.roomId,
+    roomName: req.body.roomName,
+    roomCapacity: req.body.roomCapacity,
+  };
+  // console.log(`Room Data:`, roomData);
 
-//   Course.findOneAndUpdate(
-//     { _id: crsId },
-//     { $set: courseData },
-//     { new: true },
-//     (err, updatedCourse) => {
-//       if (err) return next(new AppError(`${err}`, 500));
-//       if (!updatedCourse) return next(new AppError('Course Not Found!', 404));
-//       res.status(200).json({
-//         status: 'success',
-//         data: {
-//           updatedCourse,
-//         },
-//       });
-//     }
-//   );
-// });
+  Room.findOneAndUpdate(
+    { _id: roomId },
+    { $set: roomData },
+    { new: true },
+    (err, updatedRoom) => {
+      if (err) return next(new AppError(`${err}`, 500));
+      if (!updatedRoom) return next(new AppError('Room Not Found!', 404));
+      res.status(200).json({
+        status: 'success',
+        data: {
+          updatedRoom,
+        },
+      });
+    }
+  );
+});
 
 // //delete course
 // exports.deleteCourse = catchAsync(async (req, res, next) => {
