@@ -37,6 +37,6 @@ roomSchema.methods.validateData = function () {
 };
 
 //create model
-const Room = mongoose.model('Room', courseSchema);
+const Room = mongoose.model('Room', roomSchema);
 
 module.exports = Room;

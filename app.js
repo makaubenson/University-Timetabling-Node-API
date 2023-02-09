@@ -15,6 +15,7 @@ const departmentRouter = require('./routes/departmentRouter');
 const courseRouter = require('./routes/courseRouter');
 const semesterRouter = require('./routes/semesterRouter');
 const unitRouter = require('./routes/unitRouter');
+const roomRouter = require('./routes/roomRouter');
 
 const app = express();
 
@@ -52,6 +53,7 @@ app.use('/api/v1/departments', departmentRouter);
 app.use('/api/v1/courses', courseRouter);
 app.use('/api/v1/semesters', semesterRouter);
 app.use('/api/v1/units', unitRouter);
+app.use('/api/v1/rooms', roomRouter);
 
 // app.all('*', (req, res, next) => {
 //   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
