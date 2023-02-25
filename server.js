@@ -1,22 +1,27 @@
 //Require modules/files
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
-process.on("uncaughtException", (err) => {
-  console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
+//This code sets up an event listener for the "uncaughtException" event in a Node.js process.
+//An uncaught exception is an error that is thrown and not caught by any try/catch block or
+//error handling middleware, and would otherwise crash the process.
+process.on('uncaughtException', err => {
+  console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');
   console.log(err.name, err.message);
+  //The process.exit(1) method is then called to shut down the process with a non-zero exit code,
+  // indicating that the process was terminated due to an error.
   process.exit(1);
 });
 
 //Load Environment Configs
-dotenv.config({ path: "./config.env" });
+dotenv.config({ path: './config.env' });
 
 //require app.js
-const app = require("./app");
+const app = require('./app');
 
 //Database Connection
 const DB = process.env.DATABASE_URI.replace(
-  "<PASSWORD>",
+  '<PASSWORD>',
   process.env.DATABASE_PASSWORD
 );
 
@@ -30,7 +35,7 @@ const DB = process.env.DATABASE_URI.replace(
 // set the "strictQuery" option to false by using the code "mongoose.set('strictQuery', false);".
 //If you want to keep the current behavior, you can use "mongoose.set('strictQuery', true);"
 //to suppress the warning.
-mongoose.set("strictQuery", false);
+mongoose.set('strictQuery', false);
 
 mongoose
   .connect(DB, {
@@ -39,7 +44,7 @@ mongoose
     // useFindAndModify: false,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("DB connection successful!"));
+  .then(() => console.log('DB connection successful!'));
 
 // Run this system on port 3000
 const port = process.env.PORT || 3000;
